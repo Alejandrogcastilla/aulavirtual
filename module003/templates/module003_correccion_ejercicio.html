@@ -1,0 +1,34 @@
+{% extends 'base.html' %}
+
+{% block content %}
+	<h1> Module003 - v2 </h1>
+
+    {% for entreg in entrega %}
+        <div class="box py-3 boxaligncenter submissionsummarytable">
+            <table class="table">
+                <tbody>
+                    <tr>
+                        <th class="cell c0" scope="row">Calificación</th>
+                        <td class="submissionnotgraded cell c1 lastcol">{% if entreg.nota == None %}Sin calificar {% else %}{{ entreg.nota }} {% endif %}</td>
+                    </tr>
+                    <tr>
+                        <th class="cell c0" scope="row">Fecha de entrega</th>
+                        <td class="cell c1 lastcol">{{ entreg.date_modified }}</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <div>
+            <a href="/assignment/download/{{tarea_id}}/{{alum_id}}" target=”_blank”>{{ entrega.name }}</a>
+            <form method="post" action="/assignment/nota">
+                <input type="text" name="alumno" value="{{alum_id}}" hidden>
+                <input type="text" name="tarea" value="{{tarea_id}}" hidden>
+                <input type="text" name="nota" placeholder="Nota">
+                <button type="submit" style="background-color: grey;" class="btn btn-secondary">Poner nota</button>
+            </form>
+        </div>
+    {% endfor %}
+
+
+{% endblock %}

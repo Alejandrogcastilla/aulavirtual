@@ -92,10 +92,25 @@ class Post(db.Model):
     timestamp = db.Column(db.DateTime, index=True, default=db.func.current_timestamp())
     author_id = db.Column(db.Integer, db.ForeignKey('user.id'))
     course_id = db.Column(db.Integer, nullable=False)
+    username = db.Column(db.String(15))
 
+class Assignment(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    course_id = db.Column(db.Integer, nullable=False)
+    author_id = db.Column(db.Integer, db.ForeignKey('user.id'))
+    name = db.Column(db.Text)
+    descripcion = db.Column(db.Text)
+    date_expire = db.Column(db.DateTime)
 
-
-
+class Entrega(UserMixin,db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    file = db.Column(db.LargeBinary)
+    name = db.Column(db.String(100))
+    nota = db.Column(db.Float, nullable=True)
+    date_modified = db.Column(db.DateTime,  default=db.func.current_timestamp(),
+                                       onupdate=db.func.current_timestamp())
+    user = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)
+    assignment_id = db.Column(db.Integer, db.ForeignKey('assignment.id'), nullable=False)
 
 
 

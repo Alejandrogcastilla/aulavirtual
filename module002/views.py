@@ -40,7 +40,7 @@ def module002_post_course(course_id):
         if request.method == 'POST':
             if form.validate_on_submit():
                 try:
-                    newpost = Post(body=form.body.data, author_id=current_user.id, course_id=course_id)
+                    newpost = Post(body=form.body.data, author_id=current_user.id, course_id=course_id, username=current_user.username )
                     db.session.add(newpost)
                     db.session.commit()
                     flash("Post created")

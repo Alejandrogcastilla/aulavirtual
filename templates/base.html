@@ -95,7 +95,7 @@ div.flask-pagedown-preview h3 {
                   <li class={% if module=='module002' %}"active"{%else%}""{%endif%}><a href="/board">Discussion Board</a></li>
               {% endif %}
 
-              {% if current_user.profile in ('admin','staff','professor') %}
+              {% if current_user.profile in ('admin','staff','professor', 'student') %}
                   <li class={% if module=='module003' %}"active"{%else%}""{%endif%}><a href="/assignment">Assignment</a></li>
               {% endif %}
               {% if current_user.profile in ('admin') %}

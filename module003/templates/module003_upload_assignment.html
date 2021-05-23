@@ -1,0 +1,48 @@
+{% extends 'base.html' %}
+
+{% block content %}
+	<h1> Module003 - v2 </h1>
+        {{entrega.nota}}
+        <div class="box py-3 boxaligncenter submissionsummarytable">
+            <table class="table">
+                <tbody>
+                    <tr>
+                        <th class="cell c0" scope="row">Calificación</th>
+                        <td class="submissionnotgraded cell c1 lastcol">{% if entrega.nota == None %} Sin calificar {% else %}{{ entrega.nota }} {% endif %}</td>
+                    </tr>
+                    <tr>
+                        <th class="cell c0" scope="row">Fecha de entrega</th>
+                        <td class="cell c1 lastcol">{{ entrega.date_modified }}</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+        {% if not entrega %}
+        <h1>NO HAY ENTREGAS {{assignment_id}}</h1>
+        {% endif %}
+
+    <div class="box py-3 generalbox submissionaction">
+        {% if entrega %}
+            <div class="singlebutton">
+                <a href="/assignment/download/{{assignment_id}}/{{alum_id}}" target=”_blank”>{{ entrega.name }}</a>
+                <form method="post" action="/assignment/upload">
+                <input type="text" name="del" value="1" hidden>
+                <input type="text" name="tarea" value="{{assignment_id}}" hidden><br><br>
+                <button type="submit" style="background-color: grey;" class="btn btn-secondary">Elimina el archivo</button>
+                </form>
+            </div>
+
+        {% else %}
+            <div class="singlebutton">
+                <form method="post" action="/assignment/{{course_id}}/{{assignment_id}}/upload" enctype="multipart/form-data">
+                <input type="text" name="del" value="0" hidden>
+                <input type="text" name="tarea" value="{{assignment_id}}" hidden>
+                <input type="file" name="file" required><br><br>
+                <button type="submit" style="background-color: grey;" class="btn btn-secondary">Añade un archivo</button>
+                </form>
+            </div>
+        {% endif %}
+    </div>
+
+{% endblock %}
