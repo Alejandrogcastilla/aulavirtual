@@ -1,12 +1,16 @@
 {% extends 'base.html' %}
-
+{% import "bootstrap/wtf.html" as wtf %}
 {% block content %}
-	<h1> Module003 - v2 </h1>
+	<h1>{{assignment.name}}</h1>
 
     {% for entreg in entrega %}
         <div class="box py-3 boxaligncenter submissionsummarytable">
             <table class="table">
                 <tbody>
+                    <tr>
+                        <th class="cell c0" scope="row">Usuario</th>
+                        <td class="submissionnotgraded cell c1 lastcol">{{entreg.user}}</td>
+                    </tr>
                     <tr>
                         <th class="cell c0" scope="row">Calificación</th>
                         <td class="submissionnotgraded cell c1 lastcol">{% if entreg.nota == None %}Sin calificar {% else %}{{ entreg.nota }} {% endif %}</td>
@@ -17,17 +21,29 @@
                     </tr>
                 </tbody>
             </table>
+
+            <div class="download">
+    	    <form class="" method="POST" action="">
+    	        {{ form2.hidden_tag() }}
+    	        <input type="text" name="user" value="{{entreg.user}}" hidden>
+    	     <button class="" type="submit"> Download Assignment </button>
+    	     </form>
+    	    </div>
+
         </div>
 
-        <div>
-            <a href="/assignment/download/{{tarea_id}}/{{alum_id}}" target=”_blank”>{{ entrega.name }}</a>
-            <form method="post" action="/assignment/nota">
-                <input type="text" name="alumno" value="{{alum_id}}" hidden>
-                <input type="text" name="tarea" value="{{tarea_id}}" hidden>
-                <input type="text" name="nota" placeholder="Nota">
-                <button type="submit" style="background-color: grey;" class="btn btn-secondary">Poner nota</button>
-            </form>
-        </div>
+        <div class="container">
+    	    <form class="form-signin" method="POST" action="">
+    	        {{ form.hidden_tag() }}
+    	        {{ wtf.form_field(form.name)}}
+    	        <input type="text" name="user" value="{{entreg.user}}" hidden>
+    	     <button class="btn btn-lg btn-primary btn-block" type="submit"> Update grade </button>
+    	     </form>
+    	</div>
+
+
+
+
     {% endfor %}
 
 

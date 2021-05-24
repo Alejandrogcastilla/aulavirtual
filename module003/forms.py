@@ -12,3 +12,11 @@ class AssigmentForm(FlaskForm):
     date_expire = DateField('Choose an expiring date',format='%Y-%m-%d', default=datetime.datetime.today)
     time_expire = TimeField('Expiring time',format='%H:%M', default=datetime.time(23, 59))
     descripcion = TextAreaField('Assigment description')
+
+class GradesForm(FlaskForm):
+    name = StringField('Grade',validators=[InputRequired()])
+
+class DownloadForm(FlaskForm):
+    name = StringField('Download')
+
+
