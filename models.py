@@ -93,6 +93,7 @@ class Post(db.Model):
     author_id = db.Column(db.Integer, db.ForeignKey('user.id'))
     course_id = db.Column(db.Integer, nullable=False)
     username = db.Column(db.String(15))
+    hidden =  db.Column(db.Boolean, unique=False, default=False)
 
 class Assignment(db.Model):
     id = db.Column(db.Integer, primary_key=True)

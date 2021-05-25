@@ -6,3 +6,6 @@ import datetime
 
 class PostForm(FlaskForm):
     body = StringField("Create a new post", validators=[InputRequired()])
+
+class HideForm(FlaskForm):
+    name = StringField('Hide')

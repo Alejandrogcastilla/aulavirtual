@@ -93,6 +93,7 @@ def module003_assignment_send(course_id, assignment_id):
                     except:
                         db.session.rollback()
                         flash("Error updating grade!")
+                    return render_template("module003_correccion_ejercicio.html", module='module003', assignment=assignment, entrega = entrega, form=form, form2=form2)
 
                 if form2.validate_on_submit():
                     file_contents = Entrega.query.filter(and_(Entrega.assignment_id==int(assignment_id), Entrega.user == int(request.form['user']))).first()
@@ -114,7 +115,7 @@ def module003_assignment_send(course_id, assignment_id):
                 try:
                     db.session.add(newfile)
                     db.session.commit()
-                    flash("Uploaded file {file_contents.filename}")
+                    flash("Uploaded file succesfully")
                 except:
                     db.session.rollback()
                     flash("Error creating Assignment!")

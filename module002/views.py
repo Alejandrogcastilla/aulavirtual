@@ -33,6 +33,7 @@ def module002_post():
 @login_required
 def module002_post_course(course_id):
     form = PostForm()
+    form2 = HideForm()
     course = Course.query.filter_by(id=course_id).first()
     follow = Follow.query.filter(and_(Follow.course_id==course_id,
                                               Follow.user_id==current_user.id)).first()
@@ -47,14 +48,25 @@ def module002_post_course(course_id):
                     return redirect(url_for('module002.module002_post_course', course_id=course.id))
                 except:
                     db.session.rollback()
-                    flash("Error creating user!")
-            flash('Something unusual happened, please try again later')
+                    flash("Error creating post!")
+                return redirect(url_for('module002.module002_post_course', course_id=course.id))
+
+            if form2.validate_on_submit:
+                post = Post.query.filter(and_(Post.course_id==int(course_id), Post.id == int(request.form['id']))).first()
+                try:
+                    post.hidden = True
+                    db.session.commit()
+                    flash("Post hidden!")
+                except:
+                    db.session.rollback()
+                    flash("Error hidding post!")
+                return redirect(url_for('module002.module002_post_course', course_id=course.id))
         else:
             if current_user.profile in ('admin','staff','student'):
                 posts = Post.query.filter_by(course_id=course_id)
                 follows = Follow.query.filter_by(user_id=current_user.id)
                  #select user.username, body, timestamp from post left join user on post.author_id = user.id;
-                return render_template("module002_post_especifico.html",module="module002", form=form, posts=posts, rows=follows, course=course)
+                return render_template("module002_post_especifico.html",module="module002", form=form, posts=posts, rows=follows, course=course, form2=form2)
             else:
                 flash("Access denied!")
                 return redirect(url_for('index'))

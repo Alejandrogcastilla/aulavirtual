@@ -17,7 +17,10 @@
     </div>
 
     <br>
+    <div class="container">
     <h3>Tareas</h3>
+    </div>
+    <div class="container">
     <ul class="posts">
         {% for assignment in assignments %}
         <br>
@@ -36,7 +39,7 @@
         <br>
         {% endfor %}
     </ul>
-
+    </div>
 
 
     {% if course.user_id == current_user.id %}
